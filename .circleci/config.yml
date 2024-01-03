@@ -1,0 +1,49 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.12.0  # Puedes cambiar esto a la imagen base que necesites
+    working_directory: /app
+    steps:
+      - checkout  # Clonar el repositorio
+
+      # Instalar las dependencias
+      - run:
+          name: Install Dependencies
+          command: |
+            python -m venv venv
+            source venv/bin/activate
+            pip install -r requirements.txt
+
+      # Ejecutar los tests con cobertura
+      - run:
+          name: Run Tests with Coverage
+          command: |
+            source venv/bin/activate
+            pytest --cov=myapp --cov-fail-under=70  # Ajusta el umbral de cobertura según tus necesidades
+
+      # Construir la imagen Docker
+      - setup_remote_docker  # Configurar Docker en CircleCI
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build -t myapp:latest .
+
+      # Autenticación en Docker Hub (ejemplo)
+      - run:
+          name: Login to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+      # Push de la imagen a Docker Hub (ejemplo)
+      - run:
+          name: Push Docker Image to Docker Hub
+          command: |
+            docker tag myapp:latest "$DOCKERHUB_USERNAME/myapp:latest"
+            docker push "$DOCKERHUB_USERNAME/myapp:latest"
+            
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
