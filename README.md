@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 # keepcoding-devops-liberando-productos-practica-final
 
-## Objetivo
+## Objetivo.
 
 El objetivo es mejorar un proyecto creado previamente para ponerlo en producción, a través de la adicción de una serie de mejoras.
 
