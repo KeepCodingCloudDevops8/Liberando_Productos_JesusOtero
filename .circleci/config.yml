@@ -30,12 +30,12 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker Image
-          command: docker build -t simple-server:0.1 .
+          command: docker build -t jesusod/simple-server:latest .
       - run:
           name: Push to Docker Registry
           command: |
             echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            docker push simple-server:0.1
+            docker push jesusod/simple-server:latest
 
 workflows:
   version: 2
