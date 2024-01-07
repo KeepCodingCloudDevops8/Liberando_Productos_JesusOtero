@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-server
+  labels:
+    app: simple-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-server
+  template:
+    metadata:
+      labels:
+        app: simple-server
+    spec:
+      containers:
+      - name: simple-server
+        image: jesusod/simple-server:latest
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "30m"
+          limits:
+            memory: "700Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 8081
