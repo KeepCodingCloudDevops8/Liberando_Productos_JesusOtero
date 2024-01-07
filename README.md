@@ -1,18 +1,18 @@
 ## LIBERANDO PRODUCTOS
 
-Añadir nuevo endpoint a nuestra aplicacion:
+**Añadir nuevo endpoint a nuestra aplicacion:
 
     Se ha realizado metiendo ese codigo en el app.py
 
 ![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/57418a47-2501-4dfa-a3fe-4781acd2283b)
 
-Creacion de test unitarios para ese endpoint:
+**Creacion de test unitarios para ese endpoint:
 
   Se ha realizado metiendo ese codigo en el archivo de tests
 
 ![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/11298320-81a8-4cfb-b8a7-a070c1ea0c32)
 
-Creación de pipelines de CI/CD con CircleCi para test y build&push:
+**Creación de pipelines de CI/CD con CircleCi para test y build&push:
 
   Hemos creado el directorio .circleci y dentro un config.yml haciendo sus jobs como se ve en el codigo, despues hemos ido a Circleci y hemos agregado las variables necesarias e importado el repositorio, y al   hacer cada commit, nos pasa los pipelines.
 
@@ -28,13 +28,13 @@ Creación de pipelines de CI/CD con CircleCi para test y build&push:
 
 ![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/2c18c4f4-9e54-48f2-aa33-157a1d5c7440)
 
-Configuracion de monitorizacion del nuevo endpoint:
+**Configuracion de monitorizacion del nuevo endpoint:
 
 Hemos visto un poco del ejemplo del codigo en el app.py para el resto de endpoints, y lo hemos replicado, pero para nuestro nuevo endpoint.
 
 ![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/90067a7d-2c3a-4d68-8ae5-47038e9d2389)
 
-Creacion de alertas con Slack para aviso por notificaciones:
+**Creacion de alertas con Slack para aviso por notificaciones:
 
   He seguido los apartados del lab 3 y al realizar la prueba con extress, me ha llegado la notificacion.
   
@@ -52,11 +52,11 @@ Creacion de alertas con Slack para aviso por notificaciones:
 
 ![notificacion en slack](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/3648b744-1996-47d5-b48d-bf6ff23f8ea1)
 
-Nos hemos creado tambien estos manifests para desplegar la aplicacion en kubernetes con su deplyment.yaml y su service.yaml y ejecutado el kubectl apply -f .
+**Nos hemos creado tambien estos manifests para desplegar la aplicacion en kubernetes con su deplyment.yaml y su service.yaml y ejecutado el kubectl apply -f .
 
 ![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/f3ac8cf5-1409-4d05-b280-be0501197ccd)
 
-En cuanto al ultimo apartado, el de Grafana, he conseguido hacer todos los pasos, o sea, levantar los puertos, crear el dashboard, pero no soy capaz de que me lleguen datos.
+**En cuanto al ultimo apartado, el de Grafana, he conseguido hacer todos los pasos, o sea, levantar los puertos, crear el dashboard, pero no soy capaz de que me lleguen datos.
 
   He hecho los kubectl port forward de los puertos de Grafana, Prometheus y los endpoints.
   
