@@ -1,256 +1,74 @@
-<<<<<<< HEAD
-# keepcoding-devops-liberando-productos-practica-final
+## LIBERANDO PRODUCTOS
 
-## Objetivo.
+Añadir nuevo endpoint a nuestra aplicacion:
 
-El objetivo es mejorar un proyecto creado previamente para ponerlo en producción, a través de la adicción de una serie de mejoras.
+    Se ha realizado metiendo ese codigo en el app.py
 
-## Proyecto inicial
+![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/57418a47-2501-4dfa-a3fe-4781acd2283b)
 
-El proyecto inicial es un servidor que realiza lo siguiente:
+Creacion de test unitarios para ese endpoint:
 
-- Utiliza [FastAPI](https://fastapi.tiangolo.com/) para levantar un servidor en el puerto `8081` e implementa inicialmente dos endpoints:
-  - `/`: Devuelve en formato `JSON` como respuesta `{"health": "ok"}` y un status code 200.
-  - `/health`: Devuelve en formato `JSON` como respuesta `{"message":"Hello World"}` y un status code 200.
+  Se ha realizado metiendo ese codigo en el archivo de tests
 
-- Se han implementado tests unitarios para el servidor [FastAPI](https://fastapi.tiangolo.com/)
+![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/11298320-81a8-4cfb-b8a7-a070c1ea0c32)
 
-- Utiliza [prometheus-client](https://github.com/prometheus/client_python) para arrancar un servidor de métricas en el puerto `8000` y poder registrar métricas, siendo inicialmente las siguientes:
-  - `Counter('server_requests_total', 'Total number of requests to this webserver')`: Contador que se incrementará cada vez que se haga una llamada a alguno de los endpoints implementados por el servidor (inicialmente `/` y `/health`)
-  - `Counter('healthcheck_requests_total', 'Total number of requests to healthcheck')`: Contador que se incrementará cada vez que se haga una llamada al endpoint `/health`.
-  - `Counter('main_requests_total', 'Total number of requests to main endpoint')`: Contador que se incrementará cada vez que se haga una llamada al endpoint `/`.
+Creación de pipelines de CI/CD con CircleCi para test y build&push:
 
-## Software necesario
+  Hemos creado el directorio .circleci y dentro un config.yml haciendo sus jobs como se ve en el codigo, despues hemos ido a Circleci y hemos agregado las variables necesarias e importado el repositorio, y al   hacer cada commit, nos pasa los pipelines.
 
-Es necesario disponer del siguiente software:
+![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/65902ac1-6f81-4cb8-bd3d-af9659fef785)
 
-- `Python` en versión `3.8.5` o superior, disponible para los diferentes sistemas operativos en la [página oficial de descargas](https://www.python.org/downloads/release/python-385/)
+![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/dc4548db-1c80-4008-9f08-0ff910728c57)
 
-- `virtualenv` para poder instalar las librerías necesarias de Python, se puede instalar a través del siguiente comando:
+![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/e19768df-fe13-4f6a-80b0-ed7381274f66)
 
-    ```sh
-    pip3 install virtualenv
-    ```
+![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/3b2bd630-b952-4dad-b76c-93d47ba9ecea)
 
-    En caso de estar utilizando Linux y el comando anterior diera fallos se debe ejecutar el siguiente comando:
+![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/171fc85f-9999-4a24-b0cb-0016d2171e8b)
 
-    ```sh
-    sudo apt-get update && sudo apt-get install -y python3.8-venv
-    ```
+![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/2c18c4f4-9e54-48f2-aa33-157a1d5c7440)
 
-- `Docker` para poder arrancar el servidor implementado a través de un contenedor Docker, es posible descargarlo a [través de su página oficial](https://docs.docker.com/get-docker/).
+Configuracion de monitorizacion del nuevo endpoint:
 
-## Ejecución de servidor
+Hemos visto un poco del ejemplo del codigo en el app.py para el resto de endpoints, y lo hemos replicado, pero para nuestro nuevo endpoint.
 
-### Ejecución directa con Python
+![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/90067a7d-2c3a-4d68-8ae5-47038e9d2389)
 
-1. Instalación de un virtualenv, **realizarlo sólo en caso de no haberlo realizado previamente**:
-   1. Obtener la versión actual de Python instalada para crear posteriormente un virtualenv:
+Creacion de alertas con Slack para aviso por notificaciones:
 
-        ```sh
-        python3 --version
-        ```
+  He seguido los apartados del lab 3 y al realizar la prueba con extress, me ha llegado la notificacion.
+  Además de seguir los pasos para la creacion del webHook del slack, hemos agregado al values de prometheus el codigo necesario.
+  Despues hemos ejecutado los comandos: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts y helm repo update para desplegar el chart.
+  Para la prueba de extress, seguí los pasos del lab3 tabien, como acceder al contenedor mediante el comando: kubectl -n fast-api exec --stdin --tty $POD_NAME -c fast-api-webapp -- /bin/sh
+  Dentro hemos ejecutado apk update && apk add git go.
+  Descargar el repositorio de github y acceder a la carpeta de este con git clone https://github.com/jaeg/NodeWrecker.git cd NodeWrecker y go build -o extress main.go
+  Y por ultimo ejecutamos el binario obtenido para la prueba con extress: ./extress -abuse-memory -escalate -max-duration 10000000
 
-        El comando anterior mostrará algo como lo mostrado a continuación:ç
+![notificacion en slack](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/3648b744-1996-47d5-b48d-bf6ff23f8ea1)
 
-        ```sh
-            Python 3.8.13
-        ```
+Nos hemos creado tambien estos manifests para desplegar la aplicacion en kubernetes con su deplyment.yaml y su service.yaml y ejecutado el kubectl apply -f .
 
-   2. Crear de virtualenv en la raíz del directorio para poder instalar las librerías necesarias:
+![image](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/f3ac8cf5-1409-4d05-b280-be0501197ccd)
 
-       - En caso de en el comando anterior haber obtenido `Python 3.8.*`
+En cuanto al ultimo apartado, el de Grafana, he conseguido hacer todos los pasos, o sea, levantar los puertos, crear el dashboard, pero no soy capaz de que me lleguen datos.
 
-            ```sh
-            python3.8 -m venv venv
-            ```
+  He hecho los kubectl port forward de los puertos de Grafana, Prometheus y los endpoints.
+  He accedido a grafana e importado el dashboard.
 
-       - En caso de en el comando anterior haber obtenido `Python 3.9.*`:
+  Pero aqui no he conseguido que me pinte las metricas.
 
-           ```sh
-           python3.9 -m venv venv
-           ```
+![grafana dashboard](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/d8a4fcf2-8905-4cb8-8678-527b2bfe1b95)
 
-2. Activar el virtualenv creado en el directorio `venv` en el paso anterior:
+![grafana](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/1c6209f7-7eac-4d34-a21b-a90c30dc05d4)
 
-     ```sh
-     source venv/bin/activate
-     ```
 
-3. Instalar las librerías necesarias de Python, recogidas en el fichero `requirements.txt`, **sólo en caso de no haber realizado este paso previamente**. Es posible instalarlas a través del siguiente comando:
 
-    ```sh
-    pip3 install -r requirements.txt
-    ```
 
-4. Ejecución del código para arrancar el servidor:
 
-    ```sh
-    python3 src/app.py
-    ```
 
-5. La ejecución del comando anterior debería mostrar algo como lo siguiente:
 
-    ```sh
-    [2022-04-16 09:44:22 +0000] [1] [INFO] Running on http://0.0.0.0:8081 (CTRL + C to quit)
-    ```
 
-### Ejecución a través de un contenedor Docker
 
-1. Crear una imagen Docker con el código necesario para arrancar el servidor:
 
-    ```sh
-    docker build -t simple-server:0.0.1 .
-    ```
 
-2. Arrancar la imagen construida en el paso anterior mapeando los puertos utilizados por el servidor de FastAPI y el cliente de prometheus:
 
-    ```sh
-    docker run -d -p 8000:8000 -p 8081:8081 --name simple-server simple-server:0.0.1
-    ```
-
-3. Obtener los logs del contenedor creado en el paso anterior:
-
-    ```sh
-    docker logs -f simple-server
-    ```
-
-4. La ejecución del comando anterior debería mostrar algo como lo siguiente:
-
-    ```sh
-    [2022-04-16 09:44:22 +0000] [1] [INFO] Running on http://0.0.0.0:8081 (CTRL + C to quit)
-    ```
-
-## Comprobación de endpoints de servidor y métricas
-
-Una vez arrancado el servidor, utilizando cualquier de las formas expuestas en los apartados anteriores, es posible probar las funcionalidades implementadas por el servidor:
-
-- Comprobación de servidor FastAPI, a través de llamadas a los diferentes endpoints:
-
-  - Realizar una petición al endpoint `/`
-
-      ```sh
-      curl -X 'GET' \
-      'http://0.0.0.0:8081/' \
-      -H 'accept: application/json'
-      ```
-
-      Debería devolver la siguiente respuesta:
-
-      ```json
-      {"message":"Hello World"}
-      ```
-
-  - Realizar una petición al endpoint `/health`
-
-      ```sh
-      curl -X 'GET' \
-      'http://0.0.0.0:8081/health' \
-      -H 'accept: application/json' -v
-      ```
-
-      Debería devolver la siguiente respuesta.
-
-      ```json
-      {"health": "ok"}
-      ```
-
-- Comprobación de registro de métricas, si se accede a la URL `http://0.0.0.0:8000` se podrán ver todas las métricas con los valores actuales en ese momento:
-
-  - Realizar varias llamadas al endpoint `/` y ver como el contador utilizado para registrar las llamadas a ese endpoint, `main_requests_total` ha aumentado, se debería ver algo como lo mostrado a continuación:
-
-    ```sh
-    # TYPE main_requests_total counter
-    main_requests_total 4.0
-    ```
-
-  - Realizar varias llamadas al endpoint `/health` y ver como el contador utilizado para registrar las llamadas a ese endpoint, `healthcheck_requests_total` ha aumentado, se debería ver algo como lo mostrado a continuación:
-
-    ```sh
-    # TYPE healthcheck_requests_total counter
-    healthcheck_requests_total 26.0
-    ```
-
-  - También se ha credo un contador para el número total de llamadas al servidor `server_requests_total`, por lo que este valor debería ser la suma de los dos anteriores, tal y como se puede ver a continuación:
-
-    ```sh
-    # TYPE server_requests_total counter
-    server_requests_total 30.0
-    ```
-
-## Tests
-
-Se ha implementado tests unitarios para probar el servidor FastAPI, estos están disponibles en el archivo `src/tests/app_test.py`.
-
-Es posible ejecutar los tests de diferentes formas:
-
-- Ejecución de todos los tests:
-
-    ```sh
-    pytest
-    ```
-
-- Ejecución de todos los tests y mostrar cobertura:
-
-    ```sh
-    pytest --cov
-    ```
-
-- Ejecución de todos los tests y generación de report de cobertura:
-
-    ```sh
-    pytest --cov --cov-report=html
-    ```
-
-## Practica a realizar
-
-A partir del ejemplo inicial descrito en los apartados anteriores es necesario realizar una serie de mejoras:
-
-Los requirimientos son los siguientes:
-
-- Añadir por lo menos un nuevo endpoint a los existentes `/` y `/health`, un ejemplo sería `/bye` que devolvería `{"msg": "Bye Bye"}`, para ello será necesario añadirlo en el fichero [src/application/app.py](./src/application/app.py)
-
-- Creación de tests unitarios para el nuevo endpoint añadido, para ello será necesario modificar el [fichero de tests](./src/tests/app_test.py)
-
-- Opcionalmente creación de helm chart para desplegar la aplicación en Kubernetes, se dispone de un ejemplo de ello en el laboratorio realizado en la clase 3
-
-- Creación de pipelines de CI/CD en cualquier plataforma (Github Actions, Jenkins, etc) que cuenten por lo menos con las siguientes fases:
-
-  - Testing: tests unitarios con cobertura. Se dispone de un [ejemplo con Github Actions en el repositorio actual](./.github/workflows/test.yaml)
-
-  - Build & Push: creación de imagen docker y push de la misma a cualquier registry válido que utilice alguna estrategia de release para los tags de las vistas en clase, se recomienda GHCR ya incluido en los repositorios de Github. Se dispone de un [ejemplo con Github Actions en el repositorio actual](./.github/workflows/release.yaml)
-
-- Configuración de monitorización y alertas:
-
-  - Configurar monitorización mediante prometheus en los nuevos endpoints añadidos, por lo menos con la siguiente configuración:
-    - Contador cada vez que se pasa por el/los nuevo/s endpoint/s, tal y como se ha realizado para los endpoints implementados inicialmente
-
-  - Desplegar prometheus a través de Kubernetes mediante minikube y configurar alert-manager para por lo menos las siguientes alarmas, tal y como se ha realizado en el laboratorio del día 3 mediante el chart `kube-prometheus-stack`:
-    - Uso de CPU de un contenedor mayor al del límite configurado, se puede utilizar como base el ejemplo utilizado en el laboratorio 3 para mandar alarmas cuando el contenedor de la aplicación `fast-api` consumía más del asignado mediante request
-
-  - Las alarmas configuradas deberán tener severity high o critical
-
-  - Crear canal en slack `<nombreAlumno>-prometheus-alarms` y configurar webhook entrante para envío de alertas con alert manager
-
-  - Alert manager estará configurado para lo siguiente:
-    - Mandar un mensaje a Slack en el canal configurado en el paso anterior con las alertas con label "severity" y "critical"
-    - Deberán enviarse tanto alarmas como recuperación de las mismas
-    - Habrá una plantilla configurada para el envío de alarmas
-
-    Para poder comprobar si esta parte funciona se recomienda realizar una prueba de estres, como la realizada en el laboratorio 3 a partir del paso 8.
-
-  - Creación de un dashboard de Grafana, con por lo menos lo siguiente:
-    - Número de llamadas a los endpoints
-    - Número de veces que la aplicación ha arrancado
-
-## Entregables
-
-Se deberá entregar mediante un repositorio realizado a partir del original lo siguiente:
-
-- Código de la aplicación y los tests modificados
-- Ficheros para CI/CD configurados y ejemplos de ejecución válidos
-- Ficheros para despliegue y configuración de prometheus de todo lo relacionado con este, así como el dashboard creado exportado a `JSON` para poder reproducirlo
-- `README.md` donde se explique como se ha abordado cada uno de los puntos requeridos en el apartado anterior, con ejemplos prácticos y guía para poder reproducir cada uno de ellos
-=======
-# Liberando_Productos_JesusOtero
->>>>>>> 3c9c436d76a54e6b30c39bad0302304c875fc38b
