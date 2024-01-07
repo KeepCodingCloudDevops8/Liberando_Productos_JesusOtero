@@ -37,11 +37,17 @@ Hemos visto un poco del ejemplo del codigo en el app.py para el resto de endpoin
 Creacion de alertas con Slack para aviso por notificaciones:
 
   He seguido los apartados del lab 3 y al realizar la prueba con extress, me ha llegado la notificacion.
+  
   Además de seguir los pasos para la creacion del webHook del slack, hemos agregado al values de prometheus el codigo necesario.
+  
   Despues hemos ejecutado los comandos: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts y helm repo update para desplegar el chart.
+  
   Para la prueba de extress, seguí los pasos del lab3 tabien, como acceder al contenedor mediante el comando: kubectl -n fast-api exec --stdin --tty $POD_NAME -c fast-api-webapp -- /bin/sh
+  
   Dentro hemos ejecutado apk update && apk add git go.
+  
   Descargar el repositorio de github y acceder a la carpeta de este con git clone https://github.com/jaeg/NodeWrecker.git cd NodeWrecker y go build -o extress main.go
+  
   Y por ultimo ejecutamos el binario obtenido para la prueba con extress: ./extress -abuse-memory -escalate -max-duration 10000000
 
 ![notificacion en slack](https://github.com/KeepCodingCloudDevops8/Liberando_productos_JesusOtero/assets/99189407/3648b744-1996-47d5-b48d-bf6ff23f8ea1)
@@ -53,6 +59,7 @@ Nos hemos creado tambien estos manifests para desplegar la aplicacion en kuberne
 En cuanto al ultimo apartado, el de Grafana, he conseguido hacer todos los pasos, o sea, levantar los puertos, crear el dashboard, pero no soy capaz de que me lleguen datos.
 
   He hecho los kubectl port forward de los puertos de Grafana, Prometheus y los endpoints.
+  
   He accedido a grafana e importado el dashboard.
 
   Pero aqui no he conseguido que me pinte las metricas.
